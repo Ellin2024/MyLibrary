@@ -25,17 +25,17 @@ class MylibraryApplicationTests
     void testIsbnExists() 
     {
     	
-    	Category category = new Category();
-        category.setName("Test 1");
-        category.setDescription("Create New Category");
+//    	Category category = new Category();
+//        category.setName("Test 1");
+//        category.setDescription("Create New Category");
 
-        categoryService.save(category);
+//        categoryService.save(category);
 
         BookRequestDto request = BookRequestDto.builder()
-                .title("Test")
+                .title("Test 1")
                 .author("Author")
                 .isbn("ISBN-" + System.currentTimeMillis())
-                .categoryId(category.getId())
+                .categoryId(1L)
                 .build(); 
 
         bookService.create(request);

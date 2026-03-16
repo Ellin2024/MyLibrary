@@ -23,10 +23,11 @@ public class StepDefinitions
     public void createBook(String title, String author, String isbn) 
     {
 
+    	
         request = BookRequestDto.builder()
                 .title(title)
                 .author(author)
-                .isbn(isbn)
+                .isbn("ISBN-" + System.currentTimeMillis())
                 .categoryId(1L)
                 .build();
         

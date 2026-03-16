@@ -33,7 +33,7 @@ public class Book
 	
 	private String author;
 	
-	@Column(unique = true, nullable = false)
+	
 	private String isbn;
 	
 	private String description;
