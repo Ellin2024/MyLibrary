@@ -55,14 +55,18 @@ pipeline {
             steps {
                 // Publish JaCoCo HTML report in Jenkins
                 sh 'mvn jacoco:report'
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'target/site/jacoco',
-                    reportFiles: 'index.html',
-                    reportName: 'JaCoCo Coverage'
-                ])
+				post {
+                        always {
+                            publishHTML(target: [
+                                allowMissing: true,
+                                keepAll: true,
+                                alwaysLinkToLastBuild: true,
+                                reportDir: 'target/site/jacoco',
+                                reportFiles: 'index.html',
+                                reportName: 'Coverage Report'
+                            ])
+                        }
+                    }
             }
         }
         stage("Static Code Analysis (Checkstyle)") {
