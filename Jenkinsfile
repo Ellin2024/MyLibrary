@@ -19,17 +19,19 @@ pipeline {
 	
 	stages {
 		
-		stage("Compile") {
-            steps {
-                sh "mvn compile"
-            }
-        }
-		
 		stage('Checkout'){
 			steps {
 				git branch: 'main', url: 'https://github.com/Ellin2024/MyLibrary.git'
 			}
 		}
+		
+		stage('Build') {
+            steps {
+                sh 'mvn -B clean compile'
+            }
+        }
+		
+		
 		
 		stage('Unit Test'){
 			steps{
@@ -52,6 +54,7 @@ pipeline {
 		stage('JaCoCo Report') {
             steps {
                 // Publish JaCoCo HTML report in Jenkins
+                sh 'mvn jacoco:report'
                 publishHTML([
                     allowMissing: false,
                     alwaysLinkToLastBuild: true,
@@ -124,7 +127,7 @@ pipeline {
                         sh "docker rm ${CONTAINER_NAME} || true"
                     }
                     // Run new container safely
-                    def runStatus = sh(script: "docker run -d --name ${CONTAINER_NAME} -p 8082:8080 ${IMAGE_NAME}:${BUILD_TAG_VERSION}", returnStatus: true)
+                    def runStatus = sh(script: "docker run -d --name ${CONTAINER_NAME} -p 8082:8081 ${IMAGE_NAME}:${BUILD_TAG_VERSION}", returnStatus: true)
                     if (runStatus != 0) {
                         echo "⚠️ Docker run failed, check logs"
                     } else {
@@ -161,19 +164,11 @@ pipeline {
           }
           success {
              echo "Pipeline succeeded! App running at http://localhost:${env.DOCKER_HOST_PORT}/"
-			  emailext(
-            to: 'yyint3914@gmail.com',
-			subject: '✅ Build SUCCESS',
-			body: 'Build completed successfully.'
-             )
+			
           }
           failure {
               echo "Pipeline failed."
-			  emailext(
-                to: 'yyint3914@gmail.com',
-                subject: '❌ Build FAILED',
-                body: 'Build failed. Check logs.'
-            )
+			 
           }
       }
 }
