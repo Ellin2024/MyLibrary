@@ -55,6 +55,7 @@ pipeline {
             steps {
                 // Publish JaCoCo HTML report in Jenkins
                 sh 'mvn jacoco:report'
+                }
 				post {
                         always {
                             publishHTML(target: [
@@ -66,8 +67,7 @@ pipeline {
                                 reportName: 'Coverage Report'
                             ])
                         }
-                    }
-            }
+                    }           
         }
         stage("Static Code Analysis (Checkstyle)") {
             steps {
