@@ -45,7 +45,7 @@ public class StepDefinitions
                 .title(title)
                 .author(author)
                 .isbn("ISBN-" + System.currentTimeMillis())
-                .categoryId(1L)
+                .categoryId(createCategory.getId())
                 .build();
         
         
