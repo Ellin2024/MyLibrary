@@ -139,7 +139,7 @@ pipeline {
         
         stage('Acceptance Test') {
             steps {
-                sh 'bash acceptance_test.sh'
+                sh 'mvn verify'
             }
             post {
                 always {
