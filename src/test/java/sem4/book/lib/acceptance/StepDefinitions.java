@@ -28,11 +28,11 @@ public class StepDefinitions
     
     private CategoryResponseDto createCategory;
     
-//    @Before
-//    public void stepUp()
-//    {
-//    	createCategory = categoryService.create(new CategoryRequestDto("Harry Poter","Magician",null));
-//    }
+    @Before
+    public void stepUp()
+    {
+    	createCategory = categoryService.create(new CategoryRequestDto("Harry Poter","Magician",null));
+    }
     
     @Given("Book {string} by {string} with ISBN number {string}")
     public void createBook(String title, String author, String isbn) 
@@ -45,7 +45,7 @@ public class StepDefinitions
                 .title(title)
                 .author(author)
                 .isbn("ISBN-" + System.currentTimeMillis())
-                .categoryId(1L)
+                .categoryId(createCategory.getId())
                 .build();
         
         
